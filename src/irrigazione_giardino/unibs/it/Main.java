@@ -9,7 +9,8 @@ public class Main {
     public static final String[] MENU_OPTIONS = {
             "Aggiungi nuova specie.  ",
             "Aggiungi esemplari per ogni specie presente nel giardino. ",
-            "Visualizza il fabbisogno mensile di acqua per il giardino. "
+            "Visualizza il fabbisogno mensile di acqua per il giardino. ",
+            "Aggiungere un nuovo giardino. "
     };
 
     public static void main(String[] args){
@@ -23,6 +24,8 @@ public class Main {
                     case 1 -> Utility.addSpecie();
                     case 2 -> Utility.aggiungiComposizione();
                     case 3 -> Utility.stampaFabbisogno();
+                    //case 4 ->
+
                 }
             }
             while (scelta != 0) ;

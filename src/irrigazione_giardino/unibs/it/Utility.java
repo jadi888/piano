@@ -76,17 +76,23 @@ public class Utility {
         try {
             File file = new File("Piano_irrigazione.txt");
             output = new BufferedWriter(new FileWriter(file));
+            output.flush();
             output.write("Il giardino è composto da: ");
+            output.flush();
             output.write("\n");
+            output.flush();
             for(Map.Entry<Specie, Integer> entry : garden.getComposizioneGiardino().entrySet()){
                 String nomePianta = entry.getKey().getNome();
                 int nrEsemplari = entry.getValue();
                 double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
                 output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta" + fabbisognoMensilePerPianta);
+                output.flush();
             }
 
             output.write("\n");
+            output.flush();
             output.write("Il fabbisogno mensile TOTALE è di: " + garden.getFabbisognoMensile());
+            output.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
