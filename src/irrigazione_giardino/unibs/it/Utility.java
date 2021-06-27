@@ -90,8 +90,8 @@ public class Utility {
         }
      }
      else {
+            int i = 0;
             for (Giardino giardino : listaGiardini) {
-                int i = 0;
                 System.out.println("Il giardino " + i++ + "è composto da: ");
                 for (Map.Entry<Specie, Integer> entry : giardino.getComposizioneGiardino().entrySet()) {
                     String nomePianta = entry.getKey().getNome();
