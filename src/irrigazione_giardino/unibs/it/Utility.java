@@ -133,7 +133,7 @@ public class Utility {
                         int nrEsemplari = entry.getValue();
                         double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
                         output.write("\n");
-                        output.write(nomePianta + " con " + nrEsemplari + "esemplari presenti con fabbisogno mensile per pianta " + fabbisognoMensilePerPianta);
+                        output.write(nomePianta + " con " + nrEsemplari + " esemplari presenti con fabbisogno mensile per pianta " + fabbisognoMensilePerPianta);
                         output.write("\n");
                         output.flush();
                     }
@@ -153,7 +153,7 @@ public class Utility {
         }
         else{
             scelta = new MyMenu("Non è presente ancora nessun giardino di cui generare il piano di irrigazione, vuoi aggiungerne uno? ", new String[]{"SI", "NO"});
-            if(scelta.scegli() == 0){
+            while (scelta.scegli()==1){
                 Utility.nuovoGiardino();
             }
         }
