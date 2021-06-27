@@ -12,7 +12,8 @@ public class Main {
             "Aggiungi esemplari per ogni specie presente nel giardino. ",
             "Visualizza il fabbisogno mensile di acqua per il giardino. ",
             "Aggiungere un nuovo giardino. ",
-            "Visualizzare elenco giardini:"
+            "Visualizzare elenco giardini.",
+            "Genera piano irrigazione."
     };
 
     public static void main(String[] args) throws IOException {
@@ -28,6 +29,7 @@ public class Main {
                     case 3 -> Utility.stampaFabbisogno();
                     case 4 -> Utility.nuovoGiardino();
                     case 5 -> Utility.stampaGiardini();
+                    case 6 -> Utility.generaPiano();
 
 
                 }

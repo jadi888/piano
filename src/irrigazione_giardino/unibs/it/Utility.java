@@ -78,41 +78,8 @@ public class Utility {
         }
     }
 
-    public static void writer() throws IOException {
 
-        BufferedWriter output = null;
 
-        try {
-            File file = new File("Piano_irrigazione.txt");
-            output = new BufferedWriter(new FileWriter(file));
-            output.flush();
-            output.write("Il giardino è composto da: ");
-            output.flush();
-            output.write("\n");
-            output.flush();
-            if(!garden.getComposizioneGiardino().isEmpty()) {
-                for (Map.Entry<Specie, Integer> entry : garden.getComposizioneGiardino().entrySet()) {
-                    String nomePianta = entry.getKey().getNome();
-                    int nrEsemplari = entry.getValue();
-                    double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
-                    output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta" + fabbisognoMensilePerPianta);
-                    output.flush();
-                }
-            }
-
-            output.write("\n");
-            output.flush();
-            output.write("Il fabbisogno mensile TOTALE è di: " + garden.getFabbisognoMensile());
-            output.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (output != null) {
-                output.close();
-            }
-        }
-
-     }
 
      public static void stampaGiardini(){
         MyMenu scelta = null;
@@ -142,6 +109,53 @@ public class Utility {
         MyMenu scelta = new MyMenu("Vuoi aggiungere una nuova specie al giardino? ", new String[]{"Si", "No"});
         while (scelta.scegli() == 1) {
             Utility.addSpecie();
+        }
+    }
+
+    public static void generaPiano() throws IOException {
+        BufferedWriter output = null;
+        MyMenu scelta;
+
+        if(!listaGiardini.isEmpty()) {
+            try {
+                File file = new File("Piano_irrigazione.txt");
+                output = new BufferedWriter(new FileWriter(file));
+                output.flush();
+                for(Giardino giardino : listaGiardini){
+                    int i=0;
+                output.write("Il giardino "+ i++ + " è composto da: ");
+                output.flush();
+                output.write("\n");
+                output.flush();
+                if (!giardino.getComposizioneGiardino().isEmpty()) {
+                    for (Map.Entry<Specie, Integer> entry : giardino.getComposizioneGiardino().entrySet()) {
+                        String nomePianta = entry.getKey().getNome();
+                        int nrEsemplari = entry.getValue();
+                        double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
+                        output.write("\n");
+                        output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta " + fabbisognoMensilePerPianta);
+                        output.write("\n");
+                        output.flush();
+                    }
+                }
+
+                output.write("\n");
+                output.flush();
+                output.write("Il fabbisogno mensile TOTALE è di: " + giardino.getFabbisognoMensile());
+                output.flush();}
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (output != null) {
+                    output.close();
+                }
+            }
+        }
+        else{
+            scelta = new MyMenu("Non è presente ancora nessun giardino di cui generare il piano di irrigazione, vuoi aggiungerne uno? ", new String[]{"SI", "NO"});
+            while (scelta.scegli()==1){
+                Utility.nuovoGiardino();
+            }
         }
     }
 }
