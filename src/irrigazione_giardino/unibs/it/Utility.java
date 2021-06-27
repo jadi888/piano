@@ -133,7 +133,7 @@ public class Utility {
                         int nrEsemplari = entry.getValue();
                         double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
                         output.write("\n");
-                        output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta " + fabbisognoMensilePerPianta);
+                        output.write(nomePianta + " con " + nrEsemplari + "esemplari presenti con fabbisogno mensile per pianta " + fabbisognoMensilePerPianta);
                         output.write("\n");
                         output.flush();
                     }
