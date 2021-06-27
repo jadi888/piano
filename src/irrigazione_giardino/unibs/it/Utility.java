@@ -117,12 +117,12 @@ public class Utility {
         MyMenu scelta;
 
         if(!listaGiardini.isEmpty()) {
+            int i=0;
             try {
                 File file = new File("Piano_irrigazione.txt");
                 output = new BufferedWriter(new FileWriter(file));
                 output.flush();
                 for(Giardino giardino : listaGiardini){
-                    int i=0;
                 output.write("Il giardino "+ i++ + " è composto da: ");
                 output.flush();
                 output.write("\n");
@@ -138,11 +138,12 @@ public class Utility {
                         output.flush();
                     }
                 }
-
                 output.write("\n");
                 output.flush();
                 output.write("Il fabbisogno mensile TOTALE è di: " + giardino.getFabbisognoMensile());
-                output.flush();}
+                output.flush();
+                output.write("\n\n");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
