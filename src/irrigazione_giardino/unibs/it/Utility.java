@@ -153,7 +153,7 @@ public class Utility {
         }
         else{
             scelta = new MyMenu("Non è presente ancora nessun giardino di cui generare il piano di irrigazione, vuoi aggiungerne uno? ", new String[]{"SI", "NO"});
-            while (scelta.scegli()==1){
+            if(scelta.scegli() == 0){
                 Utility.nuovoGiardino();
             }
         }
