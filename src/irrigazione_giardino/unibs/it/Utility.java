@@ -1,6 +1,7 @@
 package irrigazione_giardino.unibs.it;
 
 import mylib.InputDati;
+import mylib.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Utility {
 
@@ -24,6 +26,7 @@ public class Utility {
      */
     public static ArrayList<Specie> listaSpecieUtente = new ArrayList<>();
     private static Giardino garden;
+    public static ArrayList<Giardino> listaGiardini = new ArrayList<>();
 
 
 
@@ -44,7 +47,7 @@ public class Utility {
 
 
     /**
-     * Se l'utente ha inserite altre specie, allora aggiungo al giardino anche quelli, altrimenti gli permetto
+     * Se l'utente ha inserito altre specie, allora aggiungo al giardino anche quelli, altrimenti gli permetto
      * di lavorare solo su quelli di default inseriti da me.
      */
     public static void aggiungiComposizione(){
@@ -52,25 +55,31 @@ public class Utility {
         if(listaSpecieUtente.isEmpty()) {
             listaSpecie.addAll(listaSpecieDef());
             garden = new Giardino(Servizi.addEsemplare());
+            listaGiardini.add(garden);
         }
             else{
                 listaSpecie.addAll(listaSpecieDef());
                 listaSpecie.addAll(listaSpecieUtente);
                 garden = new Giardino(Servizi.addEsemplare());
+                listaGiardini.add(garden);
             }
         }
 
 
-    public static void stampaFabbisogno() {
+    public static void stampaFabbisogno() throws IOException {
         if (garden == null) {
             System.out.println("Inserisci prima la quantità di esemplari per ogni specie: ");
             aggiungiComposizione();
+
+
         } else {
             System.out.println("Il fabbisogno mensile del giardino è di: " + garden.getFabbisognoMensile() + " litri di acqua");
+
         }
     }
 
     public static void writer() throws IOException {
+
         BufferedWriter output = null;
 
         try {
@@ -81,12 +90,14 @@ public class Utility {
             output.flush();
             output.write("\n");
             output.flush();
-            for(Map.Entry<Specie, Integer> entry : garden.getComposizioneGiardino().entrySet()){
-                String nomePianta = entry.getKey().getNome();
-                int nrEsemplari = entry.getValue();
-                double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
-                output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta" + fabbisognoMensilePerPianta);
-                output.flush();
+            if(!garden.getComposizioneGiardino().isEmpty()) {
+                for (Map.Entry<Specie, Integer> entry : garden.getComposizioneGiardino().entrySet()) {
+                    String nomePianta = entry.getKey().getNome();
+                    int nrEsemplari = entry.getValue();
+                    double fabbisognoMensilePerPianta = Specie.getFabbisogno(entry.getKey());
+                    output.write(nomePianta + " con " + nrEsemplari + " presenti con fabbisogno mensile per pianta" + fabbisognoMensilePerPianta);
+                    output.flush();
+                }
             }
 
             output.write("\n");
@@ -102,5 +113,36 @@ public class Utility {
         }
 
      }
+
+     public static void stampaGiardini(){
+        MyMenu scelta = null;
+        if(listaGiardini.isEmpty()){
+            scelta = new MyMenu("Non ci sono giardini al momento, vuoi aggiungerne uno?", new String[]{"SI", "NO"});
+        while(scelta.scegli()==1){
+            Utility.aggiungiComposizione();
+        }
+     }
+     else {
+            for (Giardino giardino : listaGiardini) {
+                int i = 0;
+                System.out.println("Il giardino " + i++ + "è composto da: ");
+                for (Map.Entry<Specie, Integer> entry : giardino.getComposizioneGiardino().entrySet()) {
+                    String nomePianta = entry.getKey().getNome();
+                    int nrPiante = entry.getValue();
+                    System.out.println(nomePianta + " con  " + nrPiante + " esemplari: ");
+                }
+            }
+        }
+    }
+
+
+    public static void nuovoGiardino() {
+        Utility.aggiungiComposizione();
+
+        MyMenu scelta = new MyMenu("Vuoi aggiungere una nuova specie al giardino? ", new String[]{"Si", "No"});
+        while (scelta.scegli() == 1) {
+            Utility.addSpecie();
+        }
+    }
 }
 

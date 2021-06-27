@@ -29,7 +29,7 @@ public class Giardino {
     }
 
     public HashMap<Specie, Integer> getComposizioneGiardino(){
-        return getComposizioneGiardino();
+        return composizioneGiardino;
     }
 
 }
